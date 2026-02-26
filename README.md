@@ -1,312 +1,286 @@
-# Bingwu Monorepo 项目模板
+# Bingwu Monorepo
 
-一个用于组件库和工具库开发的 Monorepo 项目模板，基于 pnpm workspace + Turbo 构建。
+基于 pnpm workspace + Turbo 构建的全栈 Monorepo 项目，包含 Vue 3 管理后台和 Express 服务端，共享类型、校验和工具包。
 
-## 📦 项目结构
+## 项目结构
 
 ```
 bingwu-my-monorepo/
-├── packages/                    # 公共包目录
-│   ├── shared/                  # 共享工具库
-│   ├── ui/                      # 通用 UI 组件库
-│   └── vue3-best-ui/           # Vue3 组件库
-├── apps/                        # 应用目录
-│   ├── web/                     # Web 演示应用
-│   └── docs/                    # 文档站点
-├── .changeset/                  # 版本管理配置
-├── .husky/                      # Git hooks
-├── turbo.json                   # Turbo 构建配置
-├── pnpm-workspace.yaml         # pnpm workspace 配置
-└── package.json                # 根配置文件
+├── apps/
+│   ├── admin/               # Vue 3 管理后台（Vite + Pinia + Vue Router）
+│   └── server/              # Express 服务端（Prisma + JWT + MySQL）
+├── packages/
+│   ├── shared/              # 运行时工具：Axios 工厂、HttpStatus/ApiCode、通用类型
+│   ├── shared-types/        # 纯 TypeScript 接口（User、Book 等 API 契约类型）
+│   ├── shared-schemas/      # Zod 校验 Schema（前后端共用）
+│   └── components/          # 公共 Vue 组件库
+├── turbo.json
+├── pnpm-workspace.yaml
+└── package.json
 ```
 
-## ✨ 特性
+## 技术栈
 
-- 🚀 **Turbo** - 快速的增量构建系统
-- 📦 **pnpm workspace** - 高效的包管理
-- 🔧 **TypeScript** - 类型安全
-- 🎨 **ESLint + Prettier** - 代码规范
-- 🐕 **Husky + lint-staged** - Git 提交规范
-- 📝 **Changesets** - 版本管理和发布
-- 🔀 **Commitlint** - 提交信息规范
+| 层级 | 技术                                  |
+| ---- | ------------------------------------- |
+| 前端 | Vue 3、Vite、Vue Router、Pinia、Axios |
+| 后端 | Express.js、Prisma ORM、MySQL         |
+| 校验 | Zod（`shared-schemas` 前后端共用）    |
+| 认证 | JWT（jsonwebtoken + bcryptjs）        |
+| 构建 | Turbo、pnpm workspace、TypeScript     |
+| 规范 | ESLint、Prettier、Husky、Commitlint   |
 
-## 🚀 快速开始
+## 快速开始
 
 ### 环境要求
 
 - Node.js >= 20.0.0
 - pnpm >= 10.0.0
 
-### 安装依赖
+### 安装
 
 ```bash
-# 安装 pnpm (如果还没有)
+# 安装 pnpm（如果还没有）
 npm install -g pnpm
 
-# 安装项目依赖
+# 安装所有依赖
 pnpm install
 ```
 
-### 开发命令
+### 配置环境变量
 
 ```bash
-# 启动所有包的开发模式
+# 服务端
+cp apps/server/env/.env.example apps/server/env/.env.development
+
+# 管理后台
+cp apps/admin/.env.example apps/admin/.env.local
+```
+
+### 初始化数据库
+
+```bash
+cd apps/server
+
+# 生成 Prisma Client
+pnpm db:generate
+
+# 同步数据库结构（开发环境）
+pnpm db:push
+```
+
+### 启动开发服务
+
+```bash
+# 同时启动所有应用
 pnpm dev
 
-# 只启动 packages 下的包
-pnpm dev:packages
+# 只启动管理后台（http://localhost:3000）
+pnpm dev:admin
 
-# 启动 web 应用
-pnpm dev:web
-
-# 启动 web 应用并监听 packages 变化
-pnpm dev:web:watch
-
-# 启动文档站点
-pnpm dev:docs
-
-# 构建所有包
-pnpm build
-
-# 运行测试
-pnpm test
-
-# 代码检查
-pnpm lint
-
-# 代码检查并修复
-pnpm lint:fix
-
-# 格式化代码
-pnpm format
-
-# 检查代码格式
-pnpm format:check
-
-# 清理构建产物
-pnpm clean
+# 只启动服务端（http://localhost:4000）
+pnpm dev:server
 ```
 
-### 版本管理
+## 常用命令
+
+### 根目录
 
 ```bash
-# 创建变更集
-pnpm changeset
-
-# 更新版本
-pnpm changeset:version
-
-# 发布包
-pnpm changeset:publish
+pnpm dev              # 启动所有应用
+pnpm build            # 构建所有应用
+pnpm build:admin      # 仅构建管理后台
+pnpm build:server     # 仅构建服务端
+pnpm lint             # 代码检查
+pnpm lint:fix         # 代码检查并修复
+pnpm format           # 格式化代码
+pnpm clean            # 清理构建产物
 ```
 
-## 🔨 基于此模板二次开发
-
-### 1. 修改项目名称和命名空间
-
-#### 1.1 修改根 package.json
-
-文件：[package.json](package.json)
-
-```json
-{
-  "name": "your-project-name", // 修改为你的项目名
-  "description": "your description" // 修改项目描述
-}
-```
-
-#### 1.2 修改所有包的命名空间
-
-批量替换所有 `@bingwu-my-monorepo/` 为 `@your-scope/`
-
-需要修改的文件：
-
-- [packages/shared/package.json](packages/shared/package.json)
-- [packages/ui/package.json](packages/ui/package.json)
-- [packages/vue3-best-ui/package.json](packages/vue3-best-ui/package.json)
-- [apps/web/package.json](apps/web/package.json)
-- [apps/docs/package.json](apps/docs/package.json)
-- [turbo.json](turbo.json)
-
-示例：
-
-```json
-{
-  "name": "@your-scope/shared"
-}
-```
-
-### 2. 修改 Git 和作者信息
-
-#### 2.1 修改 package.json 作者信息
-
-文件：[package.json](package.json)
-
-```json
-{
-  "author": "Your Name <your.email@example.com>",
-  "license": "MIT" // 根据需要修改许可证
-}
-```
-
-#### 2.2 初始化 Git 仓库
+### 数据库（在 apps/server 目录下执行）
 
 ```bash
-# 删除现有 Git 历史（如果需要）
-rm -rf .git
-
-# 初始化新仓库
-git init
-git add .
-git commit -m "feat: init project"
+pnpm db:generate        # 生成 Prisma Client（修改 schema 后需执行）
+pnpm db:push            # 推送 schema 变更到开发数据库（无迁移记录）
+pnpm db:migrate         # 创建迁移文件并应用到开发数据库
+pnpm db:migrate:deploy  # 应用迁移到生产数据库（CI/CD 使用）
+pnpm db:studio          # 打开 Prisma Studio 可视化管理数据
+pnpm db:reset           # 重置开发数据库（危险：会清空数据）
 ```
 
-### 3. 配置发布设置
+### 生产部署（在 apps/server 目录下执行）
 
-#### 3.1 修改 npm 发布配置
+```bash
+pnpm pm2:start    # 使用 PM2 启动服务
+pnpm pm2:reload   # 零停机重启
+pnpm pm2:stop     # 停止服务
+pnpm pm2:logs     # 查看日志
+pnpm pm2:status   # 查看运行状态
+```
 
-如果需要发布到私有 npm 仓库，修改 [.npmrc](.npmrc)：
+## 包说明
+
+### `@bingwu-my-monorepo/shared`
+
+运行时工具包：
+
+- `createHttpClient()` — 创建带拦截器的 Axios 实例
+- `HttpStatus` — HTTP 状态码常量（`200`、`401` 等）
+- `ApiCode` — 业务响应码常量（`0` 成功、`400` 参数错误等）
+- `ApiResponse<T>`、`PageResult<T>` — 通用响应类型
+
+### `@bingwu-my-monorepo/shared-types`
+
+纯 TypeScript 接口，无运行时代码：
+
+- `UserInfo`、`LoginResponse`
+- `Book`、`BookListQuery`、`CreateBookRequest`、`UpdateBookRequest`
+
+### `@bingwu-my-monorepo/shared-schemas`
+
+Zod Schema，前后端统一校验规则：
+
+- `loginSchema`、`registerSchema`
+- `createBookSchema`、`updateBookSchema`
+
+前端通过 `safeParse()` 做表单校验，后端用同一 Schema 校验请求体，保证规则一致。
+
+## 生产数据库同步
+
+> 不要在生产环境使用 `db:push`，应使用迁移文件。
+
+```bash
+# CI/CD 推荐流程
+pnpm install
+pnpm --filter @bingwu-my-monorepo/server db:generate
+pnpm --filter @bingwu-my-monorepo/server db:migrate:deploy
+pnpm build:server
+pnpm --filter @bingwu-my-monorepo/server pm2:start
+```
+
+迁移文件（`prisma/migrations/`）需提交到 Git，与代码变更一起管理。
+
+## 基于此模板二次开发
+
+### 1. 替换命名空间
+
+将所有 `@bingwu-my-monorepo` 批量替换为自己的 scope（如 `@my-company`）。
+
+涉及文件：
+
+| 文件                           | 修改内容                              |
+| ------------------------------ | ------------------------------------- |
+| `package.json`（根）           | `name` 字段                           |
+| `packages/*/package.json`      | `name` 字段                           |
+| `apps/*/package.json`          | `name` 字段及 `dependencies` 中的包名 |
+| `apps/admin/vite.config.ts`    | `resolve.alias` 中的包名 key          |
+| `apps/admin/tsconfig.app.json` | `paths` 中的包名 key                  |
+| `apps/server/tsconfig.json`    | `paths` 中的包名 key                  |
+| 所有 `import` 语句             | `@bingwu-my-monorepo/*` 的引用        |
+
+```bash
+# 示例：用 VS Code 全局替换
+@bingwu-my-monorepo  →  @my-company
+```
+
+### 2. 配置环境变量
+
+**服务端** `apps/server/env/.env.development`：
 
 ```ini
-# 私有仓库示例
-registry=https://your-private-registry.com/
-//your-private-registry.com/:_authToken=${NPM_TOKEN}
+PORT=4000
+DATABASE_URL=mysql://root:password@localhost:3306/your_db
+JWT_SECRET=your_strong_secret_key
+JWT_EXPIRES_IN=7d
+CORS_ORIGINS=http://localhost:3000
+NODE_ENV=development
 ```
 
-#### 3.2 修改包的发布配置
+**管理后台** `apps/admin/.env.local`：
 
-在各个包的 package.json 中修改 `publishConfig`：
+```ini
+VITE_API_BASE_URL=http://localhost:4000
+VITE_APP_TITLE=Your Admin
+VITE_ENV=development
+```
 
-```json
-{
-  "publishConfig": {
-    "access": "public", // 或 "restricted"
-    "registry": "https://your-private-registry.com/"
-  }
+生产环境另建 `apps/server/env/.env.production`，`JWT_SECRET` 务必换成强随机值。
+
+### 3. 修改数据库配置
+
+文件：`apps/server/prisma/schema.prisma`
+
+```prisma
+datasource db {
+  provider = "mysql"          // 按需改为 postgresql / sqlite
+  url      = env("DATABASE_URL")
 }
 ```
 
-### 4. 自定义包内容
-
-#### 4.1 修改 shared 包
-
-目录：[packages/shared](packages/shared)
-
-- 添加你的工具函数
-- 修改导出内容
-
-#### 4.2 修改 ui 包
-
-目录：[packages/ui](packages/ui)
-
-- 添加你的 UI 组件
-- 根据需要调整样式
-
-#### 4.3 修改 vue3-best-ui 包
-
-目录：[packages/vue3-best-ui](packages/vue3-best-ui)
-
-- 添加 Vue3 组件
-- 自定义组件库功能
-
-### 5. 调整构建配置
-
-#### 5.1 修改 Turbo 配置
-
-文件：[turbo.json](turbo.json)
-
-根据项目需要调整任务依赖和缓存策略。
-
-#### 5.2 修改 TypeScript 配置
-
-文件：[tsconfig.json](tsconfig.json)
-
-根据需要调整编译选项和路径映射。
-
-### 6. 自定义代码规范
-
-#### 6.1 ESLint 配置
-
-文件：[.eslintrc.cjs](.eslintrc.cjs)
-
-根据团队规范调整规则。
-
-#### 6.2 Prettier 配置
-
-文件：[.prettierrc.cjs](.prettierrc.cjs)
-
-自定义代码格式化规则。
-
-#### 6.3 Commitlint 配置
-
-文件：[commitlint.config.cjs](commitlint.config.cjs)
-
-调整提交信息规范。
-
-### 7. 添加新包
+修改完 schema 后执行：
 
 ```bash
-# 在 packages 目录下创建新包
-cd packages
-mkdir your-new-package
-cd your-new-package
-
-# 初始化 package.json
-pnpm init
+cd apps/server
+pnpm db:generate   # 重新生成 Prisma Client
+pnpm db:migrate    # 创建初始迁移文件
 ```
 
-package.json 模板：
+### 4. 修改 localStorage Key
 
-```json
+前端 Token 和用户信息存储在 localStorage，默认 key 为 `admin_token` / `admin_user`，
+建议改成项目专属名称避免与其他应用冲突。
+
+需修改的文件：
+
+- `apps/admin/src/api/index.ts` — `getToken` 回调中的 key
+- `apps/admin/src/stores/auth.ts` — `getItem` / `setItem` / `removeItem` 中的 key
+
+### 5. 调整 PM2 配置
+
+文件：`apps/server/ecosystem.config.cjs`
+
+```js
 {
-  "name": "@your-scope/your-new-package",
-  "version": "1.0.0",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
-  },
-  "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup",
-    "clean": "rimraf dist"
-  },
-  "devDependencies": {
-    "tsup": "^8.0.0",
-    "typescript": "^5.3.3"
-  }
+  name: 'your-server-name',   // pm2 进程名，改为项目名
+  instances: 1,               // 多核机器可改为 'max' 或具体数字（需 cluster 模式）
+  exec_mode: 'fork',          // 多实例时改为 'cluster'
+  max_memory_restart: '512M', // 按服务器内存调整
 }
 ```
 
-## 📖 包说明
+### 6. 添加新的业务模块
 
-### @bingwu-my-monorepo/shared
+以添加一个 `orders`（订单）模块为例，需要改动以下位置：
 
-通用工具库，包含项目中共享的工具函数和类型定义。
+**1. 数据库层** `apps/server/prisma/schema.prisma` — 新增 `model Order { ... }`
 
-### @bingwu-my-monorepo/ui
+**2. 共享类型** `packages/shared-types/src/index.ts` — 新增 `Order`、`CreateOrderRequest` 等接口
 
-通用 UI 组件库，包含框架无关的 UI 组件。
+**3. 共享校验** `packages/shared-schemas/src/index.ts` — 新增 `createOrderSchema` 等 Zod Schema
 
-### @bingwu-my-monorepo/vue3-best-ui
+**4. 服务端路由** `apps/server/src/routes/orders.ts` — 新增 CRUD 接口，挂载到 `app.ts`
 
-Vue3 组件库，包含 Vue3 专用的组件。
+**5. 前端 API** `apps/admin/src/api/orders.ts` — 封装请求函数
 
-### @bingwu-my-monorepo/web
+**6. 前端页面** `apps/admin/src/views/OrdersView.vue` + 注册路由
 
-Web 演示应用，用于展示和测试组件。
+## 提交规范
 
-## 🔗 参考资源
+遵循 [Conventional Commits](https://www.conventionalcommits.org/)：
+
+```
+feat:     新功能
+fix:      Bug 修复
+refactor: 重构（不涉及功能变更）
+chore:    构建/工具/依赖更新
+docs:     文档修改
+style:    代码格式调整
+test:     测试相关
+```
+
+## 参考资源
 
 - [Turbo 文档](https://turbo.build/repo/docs)
-- [pnpm workspace 文档](https://pnpm.io/workspaces)
-- [Changesets 文档](https://github.com/changesets/changesets)
-
-## 📄 许可证
-
-ISC
+- [pnpm workspace](https://pnpm.io/workspaces)
+- [Prisma 文档](https://www.prisma.io/docs)
+- [Zod 文档](https://zod.dev)
