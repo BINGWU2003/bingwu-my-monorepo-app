@@ -12,9 +12,20 @@ dist
 .DS_Store
 *.log
 .turbo
-.env.local
 cache
 .claude
+
+# 环境变量（保留 .env.example）
+.env
+.env.local
+.env.*
+!.env.example
+
+# Server 构建产物（server 使用独立 outDir）
+apps/server/dist/
+
+# Prisma 生成的客户端（由 prisma generate 自动生成）
+apps/server/src/generated/
 
 # Editor directories and files
 .vscode/*

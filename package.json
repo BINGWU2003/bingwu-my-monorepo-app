@@ -6,14 +6,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "turbo run dev",
-    "dev:packages": "turbo run dev --filter=./packages/*",
-    "dev:web": "turbo run dev --filter=@bingwu-my-monorepo/web",
-    "dev:web:watch": "turbo run dev --filter=./packages/* --filter=@bingwu-my-monorepo/web",
-    "dev:docs": "turbo run dev --filter=@bingwu-my-monorepo/docs",
+    "dev:admin": "turbo run dev --filter=@bingwu-my-monorepo/admin",
+    "dev:server": "turbo run dev --filter=@bingwu-my-monorepo/server",
     "build": "turbo run build",
-    "build:packages": "turbo run build --filter=./packages/*",
-    "build:web": "turbo run build --filter=@bingwu-my-monorepo/web",
-    "build:docs": "turbo run build --filter=@bingwu-my-monorepo/docs",
+    "build:admin": "turbo run build --filter=@bingwu-my-monorepo/admin",
+    "build:server": "turbo run build --filter=@bingwu-my-monorepo/server",
     "test": "turbo run test",
     "clean": "turbo run clean",
     "preinstall": "npx only-allow pnpm",
@@ -21,10 +18,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,vue,json,css,scss,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,vue,json,css,scss,md}\"",
-    "prepare": "husky",
-    "changeset": "changeset",
-    "changeset:version": "changeset version",
-    "changeset:publish": "changeset publish"
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -33,6 +27,15 @@
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=10.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "vue-demi",
+      "prisma",
+      "@prisma/client",
+      "@prisma/engines"
+    ]
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": [
@@ -47,7 +50,6 @@
     ]
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.7",
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-conventional": "^20.2.0",
     "@eslint/js": "^9.0.0",
