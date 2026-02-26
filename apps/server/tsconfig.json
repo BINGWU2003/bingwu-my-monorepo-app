@@ -4,18 +4,13 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "lib": ["ES2022"],
+    "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-      "@bingwu-my-monorepo/shared": ["../../packages/shared/src"],
-      "@bingwu-my-monorepo/shared-types": ["../../packages/shared-types/src"],
-      "@bingwu-my-monorepo/shared-schemas": ["../../packages/shared-schemas/src"]
-    }
+    "resolveJsonModule": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

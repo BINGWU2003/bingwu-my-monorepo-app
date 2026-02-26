@@ -5,13 +5,8 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@bingwu-my-monorepo/shared": ["../../packages/shared/src"],
-      "@bingwu-my-monorepo/components": ["../../packages/components/src"],
-      "@bingwu-my-monorepo/shared-types": ["../../packages/shared-types/src"],
-      "@bingwu-my-monorepo/shared-schemas": ["../../packages/shared-schemas/src"]
+      "@/*": ["./src/*"]
     },
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

@@ -168,15 +168,13 @@ pnpm --filter @bingwu-my-monorepo/server pm2:start
 
 涉及文件：
 
-| 文件                           | 修改内容                              |
-| ------------------------------ | ------------------------------------- |
-| `package.json`（根）           | `name` 字段                           |
-| `packages/*/package.json`      | `name` 字段                           |
-| `apps/*/package.json`          | `name` 字段及 `dependencies` 中的包名 |
-| `apps/admin/vite.config.ts`    | `resolve.alias` 中的包名 key          |
-| `apps/admin/tsconfig.app.json` | `paths` 中的包名 key                  |
-| `apps/server/tsconfig.json`    | `paths` 中的包名 key                  |
-| 所有 `import` 语句             | `@bingwu-my-monorepo/*` 的引用        |
+| 文件                        | 修改内容                              |
+| --------------------------- | ------------------------------------- |
+| `package.json`（根）        | `name` 字段                           |
+| `packages/*/package.json`   | `name` 字段                           |
+| `apps/*/package.json`       | `name` 字段及 `dependencies` 中的包名 |
+| `apps/admin/vite.config.ts` | `resolve.alias` 中的包名 key          |
+| 所有 `import` 语句          | `@bingwu-my-monorepo/*` 的引用        |
 
 ```bash
 # 示例：用 VS Code 全局替换

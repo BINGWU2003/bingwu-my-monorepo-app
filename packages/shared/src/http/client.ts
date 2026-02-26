@@ -1,6 +1,5 @@
 import axios from 'axios';
 import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
-
 export interface HttpClientOptions {
   baseURL: string;
   timeout?: number;
