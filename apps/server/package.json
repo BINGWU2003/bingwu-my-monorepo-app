@@ -23,7 +23,7 @@
     "db:migrate:deploy": "dotenv -e env/.env.production -- prisma migrate deploy",
     "db:studio": "dotenv -e env/.env.development -- prisma studio",
     "db:reset": "dotenv -e env/.env.development -- prisma migrate reset",
-    "clean": "rimraf dist node_modules"
+    "clean": "rimraf node_modules dist"
   },
   "dependencies": {
     "@prisma/client": "^6.0.0",
@@ -46,7 +46,6 @@
     "dotenv-cli": "^8.0.0",
     "nodemon": "^3.1.0",
     "prisma": "^6.0.0",
-    "rimraf": "^6.1.0",
     "tsx": "^4.19.0",
     "typescript": "~5.9.3"
   }
