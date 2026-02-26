@@ -11,6 +11,7 @@
     "build": "turbo run build",
     "build:admin": "turbo run build --filter=@bingwu-my-monorepo/admin",
     "build:server": "turbo run build --filter=@bingwu-my-monorepo/server",
+    "deploy:server": "pnpm --filter @bingwu-my-monorepo/server deploy",
     "test": "turbo run test",
     "clean": "turbo run clean",
     "preinstall": "npx only-allow pnpm",
