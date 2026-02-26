@@ -1,11 +1,13 @@
 import type { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../lib/jwt';
+import { HttpStatus, ApiCode } from '@bingwu-my-monorepo/shared';
 
 export function authenticate(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
-  console.log(authHeader);
   if (!authHeader?.startsWith('Bearer ')) {
-    res.status(401).json({ code: 401, message: '未授权', data: null });
+    res
+      .status(HttpStatus.UNAUTHORIZED)
+      .json({ code: ApiCode.UNAUTHORIZED, message: '未授权', data: null });
     return;
   }
 
@@ -15,6 +17,8 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
     req.user = { id: payload.userId, role: payload.role };
     next();
   } catch {
-    res.status(401).json({ code: 401, message: 'Token 无效或已过期', data: null });
+    res
+      .status(HttpStatus.UNAUTHORIZED)
+      .json({ code: ApiCode.UNAUTHORIZED, message: 'Token 无效或已过期', data: null });
   }
 }
