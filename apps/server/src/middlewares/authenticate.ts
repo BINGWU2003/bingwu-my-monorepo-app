@@ -3,6 +3,7 @@ import { verifyToken } from '../lib/jwt';
 
 export function authenticate(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
+  console.log(authHeader);
   if (!authHeader?.startsWith('Bearer ')) {
     res.status(401).json({ code: 401, message: '未授权', data: null });
     return;

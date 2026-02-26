@@ -1,34 +1,36 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
+import AdminLayout from '../layouts/AdminLayout.vue';
+import AuthLayout from '../layouts/AuthLayout.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/login',
-      name: 'login',
-      component: () => import('../layouts/AuthLayout.vue'),
+      component: AuthLayout,
       children: [
         {
           path: '',
+          name: 'login',
           component: () => import('../views/LoginView.vue'),
         },
       ],
     },
     {
       path: '/register',
-      name: 'register',
-      component: () => import('../layouts/AuthLayout.vue'),
+      component: AuthLayout,
       children: [
         {
           path: '',
+          name: 'register',
           component: () => import('../views/RegisterView.vue'),
         },
       ],
     },
     {
       path: '/',
-      component: () => import('../layouts/AdminLayout.vue'),
+      component: AdminLayout,
       meta: { requiresAuth: true },
       children: [
         {

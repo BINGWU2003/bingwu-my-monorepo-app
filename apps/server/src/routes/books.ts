@@ -7,17 +7,20 @@ import {
   bookListQuerySchema,
   idParamSchema,
 } from '@bingwu-my-monorepo/shared-schemas';
+import { HttpStatus, ApiCode } from '@bingwu-my-monorepo/shared';
 
 const router = Router();
 
 // GET /api/books?page=1&pageSize=10&title=&author=
-router.get('/', async (req, res, next) => {
+router.get('/', authenticate, async (req, res, next) => {
   try {
     const result = bookListQuerySchema.safeParse(req.query);
     if (!result.success) {
-      res
-        .status(400)
-        .json({ code: 400, message: result.error.issues[0]?.message ?? '参数错误', data: null });
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: ApiCode.BAD_REQUEST,
+        message: result.error.issues[0]?.message ?? '参数错误',
+        data: null,
+      });
       return;
     }
     const { page, pageSize, title, author } = result.data;
@@ -37,29 +40,33 @@ router.get('/', async (req, res, next) => {
       }),
     ]);
 
-    res.json({ code: 0, message: 'ok', data: { list, total, page, pageSize } });
+    res.json({ code: ApiCode.SUCCESS, message: 'ok', data: { list, total, page, pageSize } });
   } catch (err) {
     next(err);
   }
 });
 
 // GET /api/books/:id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', authenticate, async (req, res, next) => {
   try {
     const idResult = idParamSchema.safeParse(req.params);
     if (!idResult.success) {
-      res.status(400).json({ code: 400, message: '无效的 id', data: null });
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ code: ApiCode.BAD_REQUEST, message: '无效的 id', data: null });
       return;
     }
     const { id } = idResult.data;
 
     const book = await prisma.book.findUnique({ where: { id } });
     if (!book) {
-      res.status(404).json({ code: 404, message: '书籍不存在', data: null });
+      res
+        .status(HttpStatus.NOT_FOUND)
+        .json({ code: ApiCode.NOT_FOUND, message: '书籍不存在', data: null });
       return;
     }
 
-    res.json({ code: 0, message: 'ok', data: book });
+    res.json({ code: ApiCode.SUCCESS, message: 'ok', data: book });
   } catch (err) {
     next(err);
   }
@@ -70,9 +77,11 @@ router.post('/', authenticate, async (req, res, next) => {
   try {
     const result = createBookSchema.safeParse(req.body);
     if (!result.success) {
-      res
-        .status(400)
-        .json({ code: 400, message: result.error.issues[0]?.message ?? '参数错误', data: null });
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: ApiCode.BAD_REQUEST,
+        message: result.error.issues[0]?.message ?? '参数错误',
+        data: null,
+      });
       return;
     }
     const { title, author, isbn, description, price, publishedAt } = result.data;
@@ -88,7 +97,7 @@ router.post('/', authenticate, async (req, res, next) => {
       },
     });
 
-    res.status(201).json({ code: 0, message: '创建成功', data: book });
+    res.status(HttpStatus.CREATED).json({ code: ApiCode.SUCCESS, message: '创建成功', data: book });
   } catch (err) {
     next(err);
   }
@@ -99,22 +108,28 @@ router.put('/:id', authenticate, async (req, res, next) => {
   try {
     const idResult = idParamSchema.safeParse(req.params);
     if (!idResult.success) {
-      res.status(400).json({ code: 400, message: '无效的 id', data: null });
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ code: ApiCode.BAD_REQUEST, message: '无效的 id', data: null });
       return;
     }
     const { id } = idResult.data;
 
     const existing = await prisma.book.findUnique({ where: { id } });
     if (!existing) {
-      res.status(404).json({ code: 404, message: '书籍不存在', data: null });
+      res
+        .status(HttpStatus.NOT_FOUND)
+        .json({ code: ApiCode.NOT_FOUND, message: '书籍不存在', data: null });
       return;
     }
 
     const result = updateBookSchema.safeParse(req.body);
     if (!result.success) {
-      res
-        .status(400)
-        .json({ code: 400, message: result.error.issues[0]?.message ?? '参数错误', data: null });
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: ApiCode.BAD_REQUEST,
+        message: result.error.issues[0]?.message ?? '参数错误',
+        data: null,
+      });
       return;
     }
     const { title, author, isbn, description, price, publishedAt } = result.data;
@@ -133,7 +148,7 @@ router.put('/:id', authenticate, async (req, res, next) => {
       },
     });
 
-    res.json({ code: 0, message: '更新成功', data: book });
+    res.json({ code: ApiCode.SUCCESS, message: '更新成功', data: book });
   } catch (err) {
     next(err);
   }
@@ -144,19 +159,23 @@ router.delete('/:id', authenticate, async (req, res, next) => {
   try {
     const idResult = idParamSchema.safeParse(req.params);
     if (!idResult.success) {
-      res.status(400).json({ code: 400, message: '无效的 id', data: null });
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ code: ApiCode.BAD_REQUEST, message: '无效的 id', data: null });
       return;
     }
     const { id } = idResult.data;
 
     const existing = await prisma.book.findUnique({ where: { id } });
     if (!existing) {
-      res.status(404).json({ code: 404, message: '书籍不存在', data: null });
+      res
+        .status(HttpStatus.NOT_FOUND)
+        .json({ code: ApiCode.NOT_FOUND, message: '书籍不存在', data: null });
       return;
     }
 
     await prisma.book.delete({ where: { id } });
-    res.json({ code: 0, message: '删除成功', data: null });
+    res.json({ code: ApiCode.SUCCESS, message: '删除成功', data: null });
   } catch (err) {
     next(err);
   }
