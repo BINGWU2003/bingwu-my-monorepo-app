@@ -9,6 +9,7 @@
     "build": "prisma generate && tsc -p tsconfig.json",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "start:test": "cross-env NODE_ENV=test node dist/index.js",
+    "deploy": "prisma migrate deploy && node dist/index.js",
     "pm2:start": "pm2 start ecosystem.config.cjs",
     "pm2:start:test": "pm2 start ecosystem.config.cjs --only server-test",
     "pm2:stop": "pm2 stop ecosystem.config.cjs",
