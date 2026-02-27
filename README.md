@@ -21,14 +21,14 @@ bingwu-my-monorepo/
 
 ## 技术栈
 
-| 层级 | 技术                                  |
-| ---- | ------------------------------------- |
-| 前端 | Vue 3、Vite、Vue Router、Pinia、Axios |
-| 后端 | Express.js、Prisma ORM、MySQL         |
-| 校验 | Zod（`shared-schemas` 前后端共用）    |
-| 认证 | JWT（jsonwebtoken + bcryptjs）        |
-| 构建 | Turbo、pnpm workspace、TypeScript     |
-| 规范 | ESLint、Prettier、Husky、Commitlint   |
+| 层级 | 技术                                    |
+| ---- | --------------------------------------- |
+| 前端 | Vue 3、Vite、Vue Router、Pinia、Axios   |
+| 后端 | Express.js、Prisma ORM、MySQL           |
+| 校验 | Zod（`shared-schemas` 前后端共用）      |
+| 认证 | JWT（jsonwebtoken + bcryptjs）          |
+| 构建 | Turbo、pnpm workspace、TypeScript、tsup |
+| 规范 | ESLint、Prettier、Husky、Commitlint     |
 
 ## 快速开始
 
@@ -152,7 +152,6 @@ Zod Schema，前后端统一校验规则：
 ```bash
 # CI/CD 推荐流程
 pnpm install
-pnpm --filter @bingwu-my-monorepo/server db:generate
 pnpm --filter @bingwu-my-monorepo/server db:migrate:deploy
 pnpm build:server
 pnpm --filter @bingwu-my-monorepo/server pm2:start
@@ -168,18 +167,21 @@ pnpm --filter @bingwu-my-monorepo/server pm2:start
 
 涉及文件：
 
-| 文件                        | 修改内容                              |
-| --------------------------- | ------------------------------------- |
-| `package.json`（根）        | `name` 字段                           |
-| `packages/*/package.json`   | `name` 字段                           |
-| `apps/*/package.json`       | `name` 字段及 `dependencies` 中的包名 |
-| `apps/admin/vite.config.ts` | `resolve.alias` 中的包名 key          |
-| 所有 `import` 语句          | `@bingwu-my-monorepo/*` 的引用        |
+| 文件                         | 修改内容                              |
+| ---------------------------- | ------------------------------------- |
+| `package.json`（根）         | `name` 字段                           |
+| `packages/*/package.json`    | `name` 字段                           |
+| `apps/*/package.json`        | `name` 字段及 `dependencies` 中的包名 |
+| `apps/admin/vite.config.ts`  | `resolve.alias` 中的包名 key          |
+| `apps/server/tsup.config.ts` | `noExternal` 数组中的包名             |
+| 所有 `import` 语句           | `@bingwu-my-monorepo/*` 的引用        |
 
 ```bash
 # 示例：用 VS Code 全局替换
 @bingwu-my-monorepo  →  @my-company
 ```
+
+> **注意**：`apps/server/tsup.config.ts` 的 `noExternal` 数组用于将 workspace 内部包打包进服务端产物（避免部署时符号链接问题），替换命名空间后需同步更新此数组。
 
 ### 2. 配置环境变量
 
@@ -256,11 +258,13 @@ pnpm db:migrate    # 创建初始迁移文件
 
 **3. 共享校验** `packages/shared-schemas/src/index.ts` — 新增 `createOrderSchema` 等 Zod Schema
 
-**4. 服务端路由** `apps/server/src/routes/orders.ts` — 新增 CRUD 接口，挂载到 `app.ts`
+**4. 服务端路由** `apps/server/src/routes/orders.ts` — 新增 CRUD 接口，在 `apps/server/src/routes/index.ts` 中挂载
 
 **5. 前端 API** `apps/admin/src/api/orders.ts` — 封装请求函数
 
 **6. 前端页面** `apps/admin/src/views/OrdersView.vue` + 注册路由
+
+> **提示**：如果第 2、3 步新增了 workspace 包（如 `packages/shared-utils`），需将包名加入 `apps/server/tsup.config.ts` 的 `noExternal` 数组，否则服务端打包产物在部署时可能因符号链接缺失而报错。
 
 ## 提交规范
 
