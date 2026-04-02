@@ -37,8 +37,8 @@ dataThemeChange(overallStyle.value);
 const { title } = useNav();
 
 const ruleForm = reactive({
-  username: 'admin',
-  password: 'admin123',
+  email: 'admin@example.com',
+  password: 'Admin123!',
 });
 
 const onLogin = async (formEl: FormInstance | undefined) => {
@@ -48,12 +48,11 @@ const onLogin = async (formEl: FormInstance | undefined) => {
       loading.value = true;
       useUserStoreHook()
         .loginByUsername({
-          username: ruleForm.username,
+          email: ruleForm.email,
           password: ruleForm.password,
         })
         .then((res) => {
           if (res.success) {
-            // 获取后端路由
             return initRouter().then(() => {
               disabled.value = true;
               router
@@ -66,6 +65,9 @@ const onLogin = async (formEl: FormInstance | undefined) => {
           } else {
             message('登录失败', { type: 'error' });
           }
+        })
+        .catch(() => {
+          message('登录失败，请检查邮箱和密码', { type: 'error' });
         })
         .finally(() => (loading.value = false));
     }
@@ -110,16 +112,21 @@ useEventListener(document, 'keydown', ({ code }) => {
                 :rules="[
                   {
                     required: true,
-                    message: '请输入账号',
+                    message: '请输入邮箱',
+                    trigger: 'blur',
+                  },
+                  {
+                    type: 'email',
+                    message: '请输入有效的邮箱地址',
                     trigger: 'blur',
                   },
                 ]"
-                prop="username"
+                prop="email"
               >
                 <el-input
-                  v-model="ruleForm.username"
+                  v-model="ruleForm.email"
                   clearable
-                  placeholder="账号"
+                  placeholder="邮箱"
                   :prefix-icon="useRenderIcon(User)"
                 />
               </el-form-item>

@@ -2,7 +2,7 @@ import { createHttpClient } from '@bingwu-my-monorepo/shared';
 import { useAuthStore } from '@/stores/auth';
 
 export const http = createHttpClient({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: '',
   getToken: () => localStorage.getItem('admin_token'),
   onUnauthorized: () => {
     const authStore = useAuthStore();

@@ -4,9 +4,10 @@ import { resolve } from 'path';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '') as unknown as ImportMetaEnv;
+  const envDir = resolve(__dirname, 'env');
+  const env = loadEnv(mode, envDir, '') as unknown as ImportMetaEnv;
   return {
-    envDir: resolve(__dirname, 'env'),
+    envDir,
     plugins: [vue()],
     resolve: {
       alias: {
