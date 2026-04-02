@@ -15,12 +15,13 @@ export default [
     ignores: [
       '**/node_modules/**',
       '**/dist/**',
-      '**/build/**',
       '**/public/**',
       '**/.turbo/**',
       '**/.vitepress/cache/**',
       '**/*.min.js',
       'pnpm-lock.yaml',
+      // apps/web 第三方生成文件（iconfont）
+      'apps/web/src/assets/iconfont/**',
     ],
   },
 
@@ -82,7 +83,7 @@ export default [
       },
     },
     rules: {
-      ...pluginVue.configs['vue3-recommended'].rules,
+      ...pluginVue.configs['recommended'].rules,
       ...tsPlugin.configs.recommended.rules,
       // Vue 规则
       'vue/multi-word-component-names': [
@@ -119,6 +120,22 @@ export default [
     rules: {
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    },
+  },
+
+  // ─── apps/web（pure-admin-thin 模板）宽松规则覆盖 ───────────
+  // pure-admin-thin 是第三方模板，保留其原有代码风格，仅在此收紧必要规则
+  {
+    files: ['apps/web/src/**', 'apps/web/mock/**', 'apps/web/types/**', 'apps/web/build/**'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      'no-prototype-builtins': 'off',
+      '@typescript-eslint/no-wrapper-object-types': 'off',
+      'vue/multi-word-component-names': 'off',
+      'vue/component-name-in-template-casing': 'off',
     },
   },
 
