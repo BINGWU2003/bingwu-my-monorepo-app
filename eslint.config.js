@@ -139,6 +139,17 @@ export default [
     },
   },
 
+  // ─── apps/mobile（vue3-h5-template 模板）宽松规则覆盖 ────────
+  {
+    files: ['apps/mobile/src/**', 'apps/mobile/mock/**'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
+      'vue/multi-word-component-names': 'off',
+      'vue/component-name-in-template-casing': 'off',
+    },
+  },
+
   // ─── Prettier（必须放最后，覆盖格式化规则） ──────────────────
   prettier,
   {
