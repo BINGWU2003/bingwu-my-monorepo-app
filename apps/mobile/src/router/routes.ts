@@ -3,6 +3,15 @@ import Layout from '@/layout/index.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/login/index.vue'),
+    meta: {
+      title: '登录',
+      noCache: true,
+    },
+  },
+  {
     path: '/',
     name: 'root',
     component: Layout,
@@ -25,6 +34,15 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: 'books',
+        name: 'Books',
+        component: () => import('@/views/books/index.vue'),
+        meta: {
+          title: '书籍',
+          requiresAuth: true,
+        },
+      },
+      {
         path: 'about',
         name: 'About',
         component: () => import('@/views/about/index.vue'),
@@ -35,7 +53,6 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-  // 404 页面
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',

@@ -18,6 +18,13 @@ const tabbarData = reactive([
     },
   },
   {
+    icon: 'notes-o',
+    title: '书籍',
+    to: {
+      name: 'Books',
+    },
+  },
+  {
     icon: 'user-o',
     title: '关于',
     to: {

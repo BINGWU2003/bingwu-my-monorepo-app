@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { useCachedViewStore } from '@/store/modules/cached-view';
+import { useAuthStore } from '@/store/modules/auth';
 import setPageTitle from '@/utils/set-page-title';
 import routes from './routes';
 
@@ -9,10 +10,17 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _from, next) => {
-  // 路由缓存
   useCachedViewStore().addCachedView(to);
-  // 页面 title
   setPageTitle(to.meta.title);
+
+  if (to.meta.requiresAuth) {
+    const authStore = useAuthStore();
+    if (!authStore.isLoggedIn) {
+      next({ name: 'Login', query: { redirect: to.fullPath } });
+      return;
+    }
+  }
+
   next();
 });
 

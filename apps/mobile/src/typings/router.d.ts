@@ -6,5 +6,7 @@ declare module 'vue-router' {
     title?: string;
     /** 是否不缓存该路由组件 */
     noCache?: boolean;
+    /** 是否需要登录才能访问 */
+    requiresAuth?: boolean;
   }
 }

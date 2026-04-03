@@ -42,10 +42,10 @@ const axiosInstance: AxiosInstance = Axios.create(configDefault);
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     NProgress.start();
-    // 发送请求前，可在此携带 token
-    // if (token) {
-    //   config.headers['token'] = token
-    // }
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error: AxiosError) => {
@@ -58,14 +58,11 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     NProgress.done();
-    // 与后端协定的返回字段
-    const { code, result } = response.data;
-    // 判断请求是否成功
-    const isSuccess = result && Reflect.has(response.data, 'code') && code === ResultEnum.SUCCESS;
+    const { code, data } = response.data;
+    const isSuccess = Reflect.has(response.data, 'code') && code === ResultEnum.SUCCESS;
     if (isSuccess) {
-      return result;
+      return data;
     } else {
-      // 处理请求错误
       return Promise.reject(response.data);
     }
   },
