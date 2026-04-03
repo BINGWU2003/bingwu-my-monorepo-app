@@ -70,7 +70,11 @@ export function createHttp(options: CreateHttpOptions = {}): HttpInstance {
 
       if (onError) {
         const status: number | undefined = error.response?.status;
-        const message = (status && httpErrorMap?.[status]) || error.message || '网络连接故障';
+        const message =
+          error.response?.data?.message ||
+          (status && httpErrorMap?.[status]) ||
+          error.message ||
+          '网络连接故障';
         onError(message, status);
       }
 
