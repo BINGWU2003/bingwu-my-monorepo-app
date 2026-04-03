@@ -44,6 +44,21 @@ export const getLogin = (data?: { email: string; password: string }) => {
   });
 };
 
+export type RegisterResult = {
+  success: boolean;
+  message: string;
+};
+
+/** 注册（对接真实后端 /api/auth/register） */
+export const getRegister = (data: { email: string; username: string; password: string }) => {
+  return http.post<any>('/api/auth/register', data).then((res: any) => {
+    return {
+      success: res.code === 0,
+      message: res.message ?? '',
+    } as RegisterResult;
+  });
+};
+
 /** 刷新`token`（后端暂不支持，直接 reject 触发重新登录） */
 export const refreshTokenApi = (_data?: object) => {
   return Promise.reject(new Error('Refresh token not supported'));
