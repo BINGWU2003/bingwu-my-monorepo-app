@@ -184,7 +184,7 @@ async function handleDelete(row: Book) {
 </script>
 
 <template>
-  <div class="px-6 py-5">
+  <div>
     <!-- 搜索栏 -->
     <el-card shadow="never" class="mb-4">
       <el-form :inline="true" :model="query" class="flex flex-wrap gap-y-2">
