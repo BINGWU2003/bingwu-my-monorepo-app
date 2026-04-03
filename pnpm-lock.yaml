@@ -202,9 +202,6 @@ importers:
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@22.19.15)(jiti@1.21.7)(less@4.6.4)(lightningcss@1.32.0)(sass-embedded@1.93.3)(sass@1.93.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2)
-      vite-plugin-compression:
-        specifier: ^0.5.1
-        version: 0.5.1(vite@7.3.1(@types/node@22.19.15)(jiti@1.21.7)(less@4.6.4)(lightningcss@1.32.0)(sass-embedded@1.93.3)(sass@1.93.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))
       vite-plugin-html:
         specifier: ^3.2.2
         version: 3.2.2(vite@7.3.1(@types/node@22.19.15)(jiti@1.21.7)(less@4.6.4)(lightningcss@1.32.0)(sass-embedded@1.93.3)(sass@1.93.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2))
@@ -11720,15 +11717,6 @@ snapshots:
       debug: 4.4.3(supports-color@5.5.0)
       fs-extra: 10.1.0
       vite: 7.2.2(@types/node@20.19.37)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass-embedded@1.93.3)(sass@1.93.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2)
-    transitivePeerDependencies:
-      - supports-color
-
-  vite-plugin-compression@0.5.1(vite@7.3.1(@types/node@22.19.15)(jiti@1.21.7)(less@4.6.4)(lightningcss@1.32.0)(sass-embedded@1.93.3)(sass@1.93.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2)):
-    dependencies:
-      chalk: 4.1.2
-      debug: 4.4.3(supports-color@5.5.0)
-      fs-extra: 10.1.0
-      vite: 7.3.1(@types/node@22.19.15)(jiti@1.21.7)(less@4.6.4)(lightningcss@1.32.0)(sass-embedded@1.93.3)(sass@1.93.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.2)
     transitivePeerDependencies:
       - supports-color
 
