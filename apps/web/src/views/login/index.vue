@@ -73,11 +73,8 @@ const onLogin = async (formEl: FormInstance | undefined) => {
                 .finally(() => (disabled.value = false));
             });
           } else {
-            message('登录失败', { type: 'error' });
+            message(res.message || '登录失败，请检查邮箱和密码', { type: 'error' });
           }
-        })
-        .catch(() => {
-          message('登录失败，请检查邮箱和密码', { type: 'error' });
         })
         .finally(() => (loading.value = false));
     }
@@ -111,9 +108,6 @@ const onRegister = async (formEl: FormInstance | undefined) => {
           } else {
             message(res.message || '注册失败', { type: 'error' });
           }
-        })
-        .catch(() => {
-          message('注册失败，请稍后重试', { type: 'error' });
         })
         .finally(() => (loading.value = false));
     }
@@ -164,7 +158,7 @@ useEventListener(document, 'keydown', ({ code }) => {
 
           <!-- 登录表单 -->
           <el-form
-            v-if="activeTab === 'login'"
+            v-show="activeTab === 'login'"
             ref="ruleFormRef"
             :model="ruleForm"
             :rules="loginRules"
@@ -209,7 +203,7 @@ useEventListener(document, 'keydown', ({ code }) => {
 
           <!-- 注册表单 -->
           <el-form
-            v-if="activeTab === 'register'"
+            v-show="activeTab === 'register'"
             ref="registerFormRef"
             :model="registerForm"
             :rules="registerRules"
