@@ -14,7 +14,6 @@
   "dependencies": {
     "@bingwu-my-monorepo/shared": "workspace:*",
     "@bingwu-my-monorepo/components": "workspace:*",
-    "@bingwu-my-monorepo/shared-types": "workspace:*",
     "@bingwu-my-monorepo/shared-schemas": "workspace:*",
     "@iconify/vue": "^4.3.0",
     "@vueuse/core": "^14.2.1",

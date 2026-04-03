@@ -11,6 +11,23 @@ export const registerSchema = z.object({
   password: z.string().min(6, '密码至少6位').max(100, '密码最多100位'),
 });
 
-// 从 schema 推断类型，避免重复定义
+export const userInfoSchema = z.object({
+  id: z.number().int(),
+  email: z.string().email(),
+  username: z.string(),
+  role: z.string(),
+});
+
+export const loginResponseSchema = z.object({
+  token: z.string(),
+  user: userInfoSchema,
+});
+
 export type LoginBody = z.infer<typeof loginSchema>;
 export type RegisterBody = z.infer<typeof registerSchema>;
+export type UserInfo = z.infer<typeof userInfoSchema>;
+export type LoginResponse = z.infer<typeof loginResponseSchema>;
+
+export type LoginRequest = LoginBody;
+export type RegisterRequest = RegisterBody;
+export type RegisterResponse = UserInfo;

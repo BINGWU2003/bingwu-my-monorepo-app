@@ -43,10 +43,6 @@ export default defineConfig(({ mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
         '@bingwu-my-monorepo/shared': path.resolve(__dirname, '../../packages/shared/src'),
         '@bingwu-my-monorepo/components': path.resolve(__dirname, '../../packages/components/src'),
-        '@bingwu-my-monorepo/shared-types': path.resolve(
-          __dirname,
-          '../../packages/shared-types/src'
-        ),
         '@bingwu-my-monorepo/shared-schemas': path.resolve(
           __dirname,
           '../../packages/shared-schemas/src'

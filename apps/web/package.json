@@ -24,7 +24,6 @@
     "@bingwu-my-monorepo/components": "workspace:*",
     "@bingwu-my-monorepo/shared": "workspace:*",
     "@bingwu-my-monorepo/shared-schemas": "workspace:*",
-    "@bingwu-my-monorepo/shared-types": "workspace:*",
     "@pureadmin/descriptions": "^1.2.1",
     "@pureadmin/table": "^3.3.0",
     "@pureadmin/utils": "^2.6.2",

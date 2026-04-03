@@ -29,7 +29,6 @@
   "dependencies": {
     "@bingwu-my-monorepo/shared": "workspace:*",
     "@bingwu-my-monorepo/shared-schemas": "workspace:*",
-    "@bingwu-my-monorepo/shared-types": "workspace:*",
     "@prisma/client": "^6.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

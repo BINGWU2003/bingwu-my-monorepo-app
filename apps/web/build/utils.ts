@@ -43,10 +43,6 @@ const alias: Record<string, string> = {
     root,
     "../../packages/components/src"
   ),
-  "@bingwu-my-monorepo/shared-types": resolve(
-    root,
-    "../../packages/shared-types/src"
-  ),
   "@bingwu-my-monorepo/shared-schemas": resolve(
     root,
     "../../packages/shared-schemas/src"

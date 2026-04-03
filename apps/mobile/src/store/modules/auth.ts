@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { loginApi } from '@/api/auth';
-import type { UserInfo, LoginRequest } from '@bingwu-my-monorepo/shared-types';
+import type { UserInfo, LoginRequest } from '@bingwu-my-monorepo/shared-schemas';
 
 const TOKEN_KEY = 'token';
 const USER_KEY = 'user';

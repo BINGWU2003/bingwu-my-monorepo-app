@@ -4,7 +4,7 @@ import type {
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
-} from '@bingwu-my-monorepo/shared-types';
+} from '@bingwu-my-monorepo/shared-schemas';
 
 export const loginApi = (data: LoginRequest) => http.post<LoginResponse>('/auth/login', data);
 

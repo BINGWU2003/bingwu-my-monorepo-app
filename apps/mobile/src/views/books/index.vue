@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Book, BookListQuery } from '@bingwu-my-monorepo/shared-types';
+import type { Book, BookListQuery } from '@bingwu-my-monorepo/shared-schemas';
 import { showFailToast, showSuccessToast } from 'vant';
 import { getBookListApi, deleteBookApi } from '@/api/books';
 import 'vant/es/toast/style';

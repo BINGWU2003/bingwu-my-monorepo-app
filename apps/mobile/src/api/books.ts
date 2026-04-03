@@ -4,7 +4,7 @@ import type {
   CreateBookRequest,
   UpdateBookRequest,
   BookListQuery,
-} from '@bingwu-my-monorepo/shared-types';
+} from '@bingwu-my-monorepo/shared-schemas';
 import type { PageResult } from '@bingwu-my-monorepo/shared';
 
 export const getBookListApi = (params?: BookListQuery) =>

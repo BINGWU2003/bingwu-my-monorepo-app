@@ -18,6 +18,29 @@ export const bookListQuerySchema = z.object({
   author: z.string().optional(),
 });
 
+// Prisma Decimal 序列化为 string，id/createdAt/updatedAt 由服务端生成
+export const bookSchema = z.object({
+  id: z.number().int(),
+  title: z.string(),
+  author: z.string(),
+  isbn: z.string().nullable(),
+  description: z.string().nullable(),
+  price: z.string().nullable(),
+  publishedAt: z.string().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
 export type CreateBookBody = z.infer<typeof createBookSchema>;
 export type UpdateBookBody = z.infer<typeof updateBookSchema>;
 export type BookListQueryParsed = z.infer<typeof bookListQuerySchema>;
+export type Book = z.infer<typeof bookSchema>;
+
+export type CreateBookRequest = CreateBookBody;
+export type UpdateBookRequest = UpdateBookBody;
+export type BookListQuery = {
+  page?: number;
+  pageSize?: number;
+  title?: string;
+  author?: string;
+};
