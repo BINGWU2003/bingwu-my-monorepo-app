@@ -25,7 +25,7 @@ export type RefreshTokenResult = {
 
 /** 登录（对接真实后端 /api/auth/login） */
 export const getLogin = (data?: { email: string; password: string }) => {
-  return http.request<any>('post', '/api/auth/login', { data }).then((res: any) => {
+  return http.post<any>('/api/auth/login', data).then((res: any) => {
     const loginData = res.data;
     const sevenDaysLater = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     return {
