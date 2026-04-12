@@ -4,7 +4,7 @@ import { hashPassword, comparePassword } from '../lib/hash';
 import { signToken } from '../lib/jwt';
 import { loginSchema, registerSchema } from '@bingwu-my-monorepo/shared-schemas';
 import { HttpStatus, ApiCode } from '@bingwu-my-monorepo/shared';
-import type { LoginResponse } from '@bingwu-my-monorepo/shared-types';
+import type { LoginResponse } from '@bingwu-my-monorepo/shared-schemas';
 
 const router = Router();
 

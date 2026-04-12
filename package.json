@@ -8,9 +8,13 @@
     "dev": "turbo run dev",
     "dev:admin": "turbo run dev --filter=@bingwu-my-monorepo/admin",
     "dev:server": "turbo run dev --filter=@bingwu-my-monorepo/server",
+    "dev:web": "turbo run dev --filter=@bingwu-my-monorepo/web",
+    "dev:mobile": "turbo run dev --filter=@bingwu-my-monorepo/mobile",
     "build": "turbo run build",
     "build:admin": "turbo run build --filter=@bingwu-my-monorepo/admin",
     "build:server": "turbo run build --filter=@bingwu-my-monorepo/server",
+    "build:web": "turbo run build --filter=@bingwu-my-monorepo/web",
+    "build:mobile": "turbo run build --filter=@bingwu-my-monorepo/mobile",
     "deploy:server": "pnpm --filter @bingwu-my-monorepo/server run deploy",
     "test": "turbo run test",
     "clean": "turbo run clean",
@@ -40,7 +44,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": [
-      "eslint --fix",
+      "cross-env NODE_OPTIONS=--max-old-space-size=4096 eslint --fix --no-warn-ignored",
       "prettier --write"
     ],
     "*.{css,scss}": [
@@ -56,15 +60,16 @@
     "@eslint/js": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^8.50.1",
     "@typescript-eslint/parser": "^8.50.1",
+    "cross-env": "catalog:",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.0.0",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-vue": "^9.33.0",
+    "eslint-plugin-vue": "^10.5.1",
+    "globals": "^17.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
-    "rimraf": "^6.1.0",
+    "rimraf": "catalog:",
     "turbo": "^2.7.2",
     "vue-eslint-parser": "^10.2.0"
   }

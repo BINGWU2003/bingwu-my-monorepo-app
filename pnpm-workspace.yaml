@@ -3,3 +3,27 @@ packages:
   - "packages/*"
   # 所有在 apps 目录下的应用
   - "apps/*"
+
+catalog:
+  # 运行时
+  vue: ^3.5.24
+  vue-router: ^4.6.3
+  pinia: ^3.0.3
+  axios: ^1.13.2
+  "@vueuse/core": ^14.2.1
+  nprogress: ^0.2.0
+  # 构建工具
+  vite: ^7.3.1
+  "@vitejs/plugin-vue": ^6.0.5
+  "@vitejs/plugin-vue-jsx": ^5.1.5
+  vue-tsc: ^3.1.2
+  typescript: ~5.9.3
+  postcss: ^8.5.6
+  tailwindcss: ^4.1.16
+  cross-env: ^7.0.3
+  rimraf: ^6.1.0
+  sass: ^1.93.2
+  # 类型声明
+  "@types/node": ^22.19.15
+  "@types/nprogress": ^0.2.3
+
