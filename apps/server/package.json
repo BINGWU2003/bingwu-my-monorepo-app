@@ -42,12 +42,12 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^24.10.0",
-    "cross-env": "^7.0.3",
+    "cross-env": "catalog:",
     "dotenv-cli": "^8.0.0",
     "nodemon": "^3.1.0",
     "prisma": "^6.0.0",
     "tsup": "^8.5.1",
     "tsx": "^4.19.0",
-    "typescript": "~5.9.3"
+    "typescript": "catalog:"
   }
 }
