@@ -18,12 +18,12 @@
     "pm2:logs": "pm2 logs server",
     "pm2:status": "pm2 status",
     "db:generate": "prisma generate",
-    "db:push": "dotenv -e env/.env.development -- prisma db push",
-    "db:push:test": "dotenv -e env/.env.test -- prisma db push",
-    "db:migrate": "dotenv -e env/.env.development -- prisma migrate dev",
-    "db:migrate:deploy": "dotenv -e env/.env.production -- prisma migrate deploy",
-    "db:studio": "dotenv -e env/.env.development -- prisma studio",
-    "db:reset": "dotenv -e env/.env.development -- prisma migrate reset",
+    "db:push": "dotenv -e env/.env -e env/.env.development -- prisma db push",
+    "db:push:test": "dotenv -e env/.env -e env/.env.test -- prisma db push",
+    "db:migrate": "dotenv -e env/.env -e env/.env.development -- prisma migrate dev",
+    "db:migrate:deploy": "dotenv -e env/.env -e env/.env.production -- prisma migrate deploy",
+    "db:studio": "dotenv -e env/.env -e env/.env.development -- prisma studio",
+    "db:reset": "dotenv -e env/.env -e env/.env.development -- prisma migrate reset",
     "clean": "rimraf node_modules dist"
   },
   "dependencies": {

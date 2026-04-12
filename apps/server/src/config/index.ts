@@ -4,8 +4,11 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const nodeEnv = process.env.NODE_ENV || 'development';
+const envDir = resolve(__dirname, '../../env');
 
-dotenvConfig({ path: resolve(__dirname, `../../env/.env.${nodeEnv}`) });
+// 仿 Vite 模式：先加载基础 .env，再用模式文件覆盖
+dotenvConfig({ path: resolve(envDir, '.env') });
+dotenvConfig({ path: resolve(envDir, `.env.${nodeEnv}`), override: true });
 
 export const config = {
   port: Number(process.env.PORT) || 4000,
