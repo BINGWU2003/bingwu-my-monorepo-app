@@ -241,7 +241,7 @@ export default [
 
   // ─── apps/mobile（vue3-h5-template 模板）宽松规则覆盖 ────────
   {
-    files: ['apps/mobile/src/**', 'apps/mobile/mock/**'],
+    files: ['apps/mobile/src/**'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
