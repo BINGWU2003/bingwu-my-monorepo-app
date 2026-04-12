@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "prisma generate",
+  "buildCommand": "npx prisma generate",
   "functions": {
     "api/index.ts": {
       "memory": 512,
