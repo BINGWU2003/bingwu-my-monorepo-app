@@ -29,12 +29,14 @@
   "dependencies": {
     "@bingwu-my-monorepo/shared": "workspace:*",
     "@bingwu-my-monorepo/shared-schemas": "workspace:*",
-    "@prisma/client": "^6.0.0",
+    "@prisma/adapter-mariadb": "^7.7.0",
+    "@prisma/client": "^7.7.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.0",
     "express": "^4.21.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "mariadb": "^3.5.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -45,7 +47,7 @@
     "cross-env": "catalog:",
     "dotenv-cli": "^8.0.0",
     "nodemon": "^3.1.0",
-    "prisma": "^6.0.0",
+    "prisma": "^7.7.0",
     "tsup": "^8.5.1",
     "tsx": "^4.19.0",
     "typescript": "catalog:"
