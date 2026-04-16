@@ -5,7 +5,7 @@ import 'vant/es/toast/style';
 
 export const http = createHttp({
   baseURL: import.meta.env.VITE_API_BASE_URL,
-  timeout: 0,
+  timeout: 10000,
   headers: { 'Content-Type': 'application/json;charset=UTF-8' },
   getToken: () => localStorage.getItem('token'),
   onRequestStart: () => NProgress.start(),
