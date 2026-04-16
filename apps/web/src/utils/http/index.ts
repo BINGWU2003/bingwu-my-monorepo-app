@@ -15,7 +15,7 @@ export const http = createHttp({
   paramsSerializer: {
     serialize: stringify as unknown as CustomParamsSerializer,
   },
-  whiteList: ['/api/auth/login', '/api/auth/register'],
+  whiteList: ['/auth/login', '/auth/register'],
   getToken: () => getToken()?.accessToken ?? null,
   formatToken: (token: string) => formatToken(token),
   onUnauthorized: () => {

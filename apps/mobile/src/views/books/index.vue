@@ -57,9 +57,9 @@ async function handleDelete(id: number) {
   }
 }
 
-function formatPrice(price: string | null) {
+function formatPrice(price: number | null) {
   if (!price) return '-';
-  return `¥${Number(price).toFixed(2)}`;
+  return `¥${price.toFixed(2)}`;
 }
 </script>
 

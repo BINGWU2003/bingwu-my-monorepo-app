@@ -53,10 +53,9 @@ export default defineConfig(({ mode }) => {
       host: true,
       port: 3002,
       proxy: {
-        '/dev-api': {
+        '/api': {
           target: env.VITE_API_PROXY_TARGET || 'http://localhost:4000',
           changeOrigin: true,
-          rewrite: (path: string) => path.replace(/^\/dev-api/, '/api'),
         },
       },
     },

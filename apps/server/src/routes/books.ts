@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import prisma from '../lib/prisma';
 import { authenticate } from '../middlewares/authenticate';
+import { serializeBook, serializeBooks } from '../lib/serializers/book';
 import {
   createBookSchema,
   updateBookSchema,
@@ -40,7 +41,11 @@ router.get('/', authenticate, async (req, res, next) => {
       }),
     ]);
 
-    res.json({ code: ApiCode.SUCCESS, message: 'ok', data: { list, total, page, pageSize } });
+    res.json({
+      code: ApiCode.SUCCESS,
+      message: 'ok',
+      data: { list: serializeBooks(list), total, page, pageSize },
+    });
   } catch (err) {
     next(err);
   }
@@ -66,7 +71,7 @@ router.get('/:id', authenticate, async (req, res, next) => {
       return;
     }
 
-    res.json({ code: ApiCode.SUCCESS, message: 'ok', data: book });
+    res.json({ code: ApiCode.SUCCESS, message: 'ok', data: serializeBook(book) });
   } catch (err) {
     next(err);
   }
@@ -97,7 +102,9 @@ router.post('/', authenticate, async (req, res, next) => {
       },
     });
 
-    res.status(HttpStatus.CREATED).json({ code: ApiCode.SUCCESS, message: '创建成功', data: book });
+    res
+      .status(HttpStatus.CREATED)
+      .json({ code: ApiCode.SUCCESS, message: '创建成功', data: serializeBook(book) });
   } catch (err) {
     next(err);
   }
@@ -148,7 +155,7 @@ router.put('/:id', authenticate, async (req, res, next) => {
       },
     });
 
-    res.json({ code: ApiCode.SUCCESS, message: '更新成功', data: book });
+    res.json({ code: ApiCode.SUCCESS, message: '更新成功', data: serializeBook(book) });
   } catch (err) {
     next(err);
   }

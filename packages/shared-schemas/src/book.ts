@@ -18,14 +18,14 @@ export const bookListQuerySchema = z.object({
   author: z.string().optional(),
 });
 
-// Prisma Decimal 序列化为 string，id/createdAt/updatedAt 由服务端生成
+// id/createdAt/updatedAt 由服务端生成
 export const bookSchema = z.object({
   id: z.number().int(),
   title: z.string(),
   author: z.string(),
   isbn: z.string().nullable(),
   description: z.string().nullable(),
-  price: z.string().nullable(),
+  price: z.number().nullable(),
   publishedAt: z.string().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),

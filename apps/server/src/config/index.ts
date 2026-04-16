@@ -18,6 +18,6 @@ export const config = {
     expiresIn: process.env.JWT_EXPIRES_IN ?? '7d',
   },
   cors: {
-    origins: (process.env.CORS_ORIGINS ?? 'http://localhost:3000,http://localhost:3001').split(','),
+    origins: (process.env.CORS_ORIGINS ?? 'http://localhost:8848,http://localhost:3002').split(','),
   },
 } as const;

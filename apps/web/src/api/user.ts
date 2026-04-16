@@ -35,10 +35,10 @@ const emptyUserData: UserResult['data'] = {
   expires: new Date(0),
 };
 
-/** 登录（对接真实后端 /api/auth/login） */
+/** 登录（对接真实后端 /auth/login） */
 export const getLogin = (data?: { email: string; password: string }): Promise<UserResult> => {
   return http
-    .post<any>('/api/auth/login', data)
+    .post<any>('/auth/login', data)
     .then((res: any) => {
       const loginData = res.data;
       const sevenDaysLater = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
@@ -68,14 +68,14 @@ export type RegisterResult = {
   message: string;
 };
 
-/** 注册（对接真实后端 /api/auth/register） */
+/** 注册（对接真实后端 /auth/register） */
 export const getRegister = (data: {
   email: string;
   username: string;
   password: string;
 }): Promise<RegisterResult> => {
   return http
-    .post<any>('/api/auth/register', data)
+    .post<any>('/auth/register', data)
     .then((res: any) => ({ success: res.code === 0, message: res.message ?? '' }))
     .catch((error: any) => ({
       success: false,
