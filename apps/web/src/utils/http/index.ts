@@ -5,6 +5,7 @@ import { getToken, formatToken, removeToken } from '@/utils/auth';
 import { router } from '@/router';
 
 export const http = createHttp({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
   headers: {
     Accept: 'application/json, text/plain, */*',

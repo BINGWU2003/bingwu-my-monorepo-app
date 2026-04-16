@@ -12,3 +12,9 @@ services:
     preDeployCommand: pnpm --filter @bingwu-my-monorepo/server exec prisma migrate deploy
     startCommand: pnpm --filter @bingwu-my-monorepo/server start
     healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGINS
+        value: https://bingwu-my-monorepo-app-web.vercel.app,https://bingwu-my-monorepo-app-mobile.vercel.app
+      # DATABASE_URL、JWT_SECRET 等在控制台设为 Secret
