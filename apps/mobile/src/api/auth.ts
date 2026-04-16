@@ -1,11 +1,10 @@
-import { http } from '@/utils/http';
-import type {
-  LoginRequest,
-  LoginResponse,
-  RegisterRequest,
-  RegisterResponse,
-} from '@bingwu-my-monorepo/shared-schemas';
+import { apiClient } from './client';
+type AuthApi = typeof apiClient.auth;
 
-export const loginApi = (data: LoginRequest) => http.post<LoginResponse>('/auth/login', data);
-export const registerApi = (data: RegisterRequest) =>
-  http.post<RegisterResponse>('/auth/register', data);
+export const loginApi = async (...args: Parameters<AuthApi['login']>) => {
+  const res = await apiClient.auth.login(...args);
+  return res.data;
+};
+
+export const registerApi = (...args: Parameters<AuthApi['register']>) =>
+  apiClient.auth.register(...args).then((res) => res.data);

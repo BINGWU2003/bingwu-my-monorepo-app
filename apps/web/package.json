@@ -21,6 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@bingwu-my-monorepo/api-client": "workspace:*",
     "@bingwu-my-monorepo/components": "workspace:*",
     "@bingwu-my-monorepo/shared": "workspace:*",
     "@bingwu-my-monorepo/shared-schemas": "workspace:*",

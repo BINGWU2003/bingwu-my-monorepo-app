@@ -1,4 +1,5 @@
-import { http } from '@/utils/http';
+import { apiClient } from './client';
+type AuthApi = typeof apiClient.auth;
 
 export type UserResult = {
   success: boolean;
@@ -36,10 +37,18 @@ const emptyUserData: UserResult['data'] = {
 };
 
 /** 登录（对接真实后端 /auth/login） */
-export const getLogin = (data?: { email: string; password: string }): Promise<UserResult> => {
-  return http
-    .post<any>('/auth/login', data)
-    .then((res: any) => {
+export const getLogin = (data?: Parameters<AuthApi['login']>[0]): Promise<UserResult> => {
+  if (!data) {
+    return Promise.resolve({
+      success: false,
+      message: '缺少登录参数',
+      data: emptyUserData,
+    });
+  }
+
+  return apiClient.auth
+    .login(data)
+    .then((res) => {
       const loginData = res.data;
       const sevenDaysLater = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
       return {
@@ -69,14 +78,10 @@ export type RegisterResult = {
 };
 
 /** 注册（对接真实后端 /auth/register） */
-export const getRegister = (data: {
-  email: string;
-  username: string;
-  password: string;
-}): Promise<RegisterResult> => {
-  return http
-    .post<any>('/auth/register', data)
-    .then((res: any) => ({ success: res.code === 0, message: res.message ?? '' }))
+export const getRegister = (data: Parameters<AuthApi['register']>[0]): Promise<RegisterResult> => {
+  return apiClient.auth
+    .register(data)
+    .then((res) => ({ success: res.code === 0, message: res.message ?? '' }))
     .catch((error: any) => ({
       success: false,
       message: error?.response?.data?.message || error?.message || '注册失败，请稍后重试',

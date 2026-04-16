@@ -2,15 +2,8 @@
 import { ref, reactive, onMounted } from 'vue';
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import {
-  getBookList,
-  createBook,
-  updateBook,
-  deleteBook,
-  type Book,
-  type BookListQuery,
-  type CreateBookData,
-} from '@/api/books';
+import { getBookList, createBook, updateBook, deleteBook } from '@/api/books';
+import type { Book, BookListQuery, CreateBookRequest } from '@bingwu-my-monorepo/shared-schemas';
 
 defineOptions({ name: 'Books' });
 
@@ -73,7 +66,7 @@ const formRef = ref<FormInstance>();
 const submitting = ref(false);
 const editingId = ref<number | null>(null);
 
-const emptyForm = (): CreateBookData & { id?: number } => ({
+const emptyForm = (): CreateBookRequest & { id?: number } => ({
   title: '',
   author: '',
   isbn: '',
@@ -129,7 +122,7 @@ async function handleSubmit() {
 
   submitting.value = true;
   try {
-    const payload: CreateBookData = {
+    const payload: CreateBookRequest = {
       title: form.title,
       author: form.author,
       ...(form.isbn ? { isbn: form.isbn } : {}),

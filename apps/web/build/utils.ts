@@ -38,6 +38,7 @@ const pathResolve = (dir = ".", metaUrl = import.meta.url) => {
 const alias: Record<string, string> = {
   "@": pathResolve("../src"),
   "@build": pathResolve(),
+  "@bingwu-my-monorepo/api-client": resolve(root, "../../packages/api-client/src"),
   "@bingwu-my-monorepo/shared": resolve(root, "../../packages/shared/src"),
   "@bingwu-my-monorepo/components": resolve(
     root,

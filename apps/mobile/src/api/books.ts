@@ -1,20 +1,18 @@
-import { http } from '@/utils/http';
-import type {
-  Book,
-  CreateBookRequest,
-  UpdateBookRequest,
-  BookListQuery,
-} from '@bingwu-my-monorepo/shared-schemas';
-import type { PageResult } from '@bingwu-my-monorepo/shared';
+import { apiClient } from './client';
 
-export const getBookListApi = (params?: BookListQuery) =>
-  http.get<PageResult<Book>>('/books', { params });
+type BooksApi = typeof apiClient.books;
 
-export const getBookApi = (id: number) => http.get<Book>(`/books/${id}`);
+export const getBookListApi = (...args: Parameters<BooksApi['list']>) =>
+  apiClient.books.list(...args).then((res) => res.data);
 
-export const createBookApi = (data: CreateBookRequest) => http.post<Book>('/books', data);
+export const getBookApi = (...args: Parameters<BooksApi['get']>) =>
+  apiClient.books.get(...args).then((res) => res.data);
 
-export const updateBookApi = (id: number, data: UpdateBookRequest) =>
-  http.put<Book>(`/books/${id}`, data);
+export const createBookApi = (...args: Parameters<BooksApi['create']>) =>
+  apiClient.books.create(...args).then((res) => res.data);
 
-export const deleteBookApi = (id: number) => http.delete<null>(`/books/${id}`);
+export const updateBookApi = (...args: Parameters<BooksApi['update']>) =>
+  apiClient.books.update(...args).then((res) => res.data);
+
+export const deleteBookApi = (...args: Parameters<BooksApi['remove']>) =>
+  apiClient.books.remove(...args).then((res) => res.data);

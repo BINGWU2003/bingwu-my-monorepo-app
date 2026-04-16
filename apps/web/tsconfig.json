@@ -22,6 +22,7 @@
     "paths": {
       "@/*": ["src/*"],
       "@build/*": ["build/*"],
+      "@bingwu-my-monorepo/api-client": ["../../packages/api-client/src"],
       "@bingwu-my-monorepo/shared": ["../../packages/shared/src"],
       "@bingwu-my-monorepo/components": ["../../packages/components/src"],
       "@bingwu-my-monorepo/shared-schemas": ["../../packages/shared-schemas/src"]

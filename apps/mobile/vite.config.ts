@@ -41,6 +41,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
+        '@bingwu-my-monorepo/api-client': path.resolve(__dirname, '../../packages/api-client/src'),
         '@bingwu-my-monorepo/shared': path.resolve(__dirname, '../../packages/shared/src'),
         '@bingwu-my-monorepo/components': path.resolve(__dirname, '../../packages/components/src'),
         '@bingwu-my-monorepo/shared-schemas': path.resolve(

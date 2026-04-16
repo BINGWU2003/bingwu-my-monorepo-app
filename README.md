@@ -11,6 +11,7 @@ bingwu-my-monorepo-app/
 │   ├── mobile/               # 移动端 H5（Vue3 + Vant + Vite）
 │   └── server/               # 服务端（Express + Prisma + MySQL）
 ├── packages/
+│   ├── api-client/           # 公共 API 接口层（通过 HttpAdapter 注入传输实现）
 │   ├── shared/               # 运行时共享：HTTP 客户端、状态码、通用类型
 │   ├── shared-schemas/       # Zod Schema + API 契约类型（前后端共用）
 │   └── components/           # 公共 Vue 组件
@@ -23,8 +24,9 @@ bingwu-my-monorepo-app/
 
 1. API 路径约定：前端统一请求 `/api/*`
 2. 开发代理约定：使用 `VITE_API_PROXY_TARGET` 指向本地服务端（默认 `http://localhost:4000`）
-3. 契约收敛：业务请求/响应类型优先复用 `@bingwu-my-monorepo/shared-schemas`
-4. 后端边界：路由层不直接泄漏 ORM 实体，统一经过 DTO 序列化
+3. 契约收敛：公共接口放在 `@bingwu-my-monorepo/api-client`，请求/响应类型优先复用 `@bingwu-my-monorepo/shared-schemas`
+4. 传输下沉：`api-client` 不绑定 axios，各端通过 `HttpAdapter` 注入自己的拦截器策略
+5. 后端边界：路由层不直接泄漏 ORM 实体，统一经过 DTO 序列化
 
 ## 技术栈
 
